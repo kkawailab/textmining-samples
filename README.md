@@ -16,7 +16,8 @@
 ```
 textmining-samples/
 ├── 1_2_1.pdf                      # 分析対象PDF（外交青書2025 第1章）
-├── text_mining_analysis.ipynb     # 統合Jupyterノートブック（実行結果付き）
+├── text_mining_analysis.ipynb     # Python版 Jupyterノートブック（実行結果付き）
+├── text_mining_analysis_r.ipynb   # R版 Jupyterノートブック
 ├── word_frequency_analysis.py     # 単語頻度分析スクリプト
 ├── wordcloud_generator.py         # ワードクラウド生成スクリプト
 ├── word_frequency_results.csv     # 単語頻度分析結果
@@ -29,8 +30,14 @@ textmining-samples/
 
 ## 必要環境
 
+### Python版
 - Python 3.8以上
 - 日本語フォント（Noto Sans CJK等）
+
+### R版（オプション）
+- R 4.0以上
+- MeCab（日本語形態素解析エンジン）
+- IRkernel（JupyterでRを実行するためのカーネル）
 
 ## インストール
 
@@ -56,6 +63,34 @@ source venv/bin/activate  # Linux/macOS
 pip install pdfplumber janome wordcloud matplotlib japanize-matplotlib networkx jupyter
 ```
 
+### 4. R環境のセットアップ（R版を使用する場合）
+
+#### MeCabのインストール
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install mecab libmecab-dev mecab-ipadic-utf8
+```
+
+**macOS:**
+```bash
+brew install mecab mecab-ipadic
+```
+
+#### Rパッケージのインストール
+
+```r
+install.packages(c("pdftools", "RMeCab", "dplyr", "tidyr", "ggplot2",
+                   "igraph", "wordcloud2", "stringr", "htmlwidgets"))
+```
+
+#### IRkernelのインストール（JupyterでR使用）
+
+```r
+install.packages("IRkernel")
+IRkernel::installspec()
+```
+
 ## 使い方
 
 ### Jupyterノートブックで実行（推奨）
@@ -79,6 +114,30 @@ jupyter notebook text_mining_analysis.ipynb
 | 7. 共起分析 | 単語ペア分析・ネットワーク描画 |
 | 8. 品詞別分析 | 品詞構成の分析 |
 | 9. ワードクラウド生成 | 視覚化 |
+| 10. 結果の保存 | CSV出力 |
+| 11. 分析結果のまとめ | サマリー表示 |
+
+### R版ノートブックで実行
+
+R環境とMeCabが設定済みの場合、R版でも同様の分析が可能です。
+
+```bash
+jupyter notebook text_mining_analysis_r.ipynb
+```
+
+R版ノートブックの構成：
+
+| セクション | 内容 |
+|-----------|------|
+| 1. 環境設定 | ライブラリの読み込み |
+| 2. 設定とパラメータ | 分析パラメータの定義 |
+| 3. PDFからテキスト抽出 | pdftoolsでテキスト抽出 |
+| 4. テキストの前処理 | クリーニング処理 |
+| 5. 形態素解析 | RMeCabで単語分解 |
+| 6. 単語頻度分析 | 出現回数カウント・可視化 |
+| 7. 共起分析 | 単語ペア分析・igraphでネットワーク描画 |
+| 8. 品詞別分析 | 品詞構成の分析 |
+| 9. ワードクラウド生成 | wordcloud2で視覚化 |
 | 10. 結果の保存 | CSV出力 |
 | 11. 分析結果のまとめ | サマリー表示 |
 
@@ -179,14 +238,28 @@ WORDCLOUD_CONFIG = {
 
 ## 使用ライブラリ
 
-| ライブラリ | バージョン | 用途 |
-|-----------|-----------|------|
-| pdfplumber | - | PDFからテキスト抽出 |
-| Janome | - | 日本語形態素解析 |
-| wordcloud | - | ワードクラウド生成 |
-| matplotlib | - | グラフ・画像表示 |
-| japanize-matplotlib | - | matplotlib日本語対応 |
-| networkx | - | 共起ネットワーク可視化 |
+### Python版
+
+| ライブラリ | 用途 |
+|-----------|------|
+| pdfplumber | PDFからテキスト抽出 |
+| Janome | 日本語形態素解析 |
+| wordcloud | ワードクラウド生成 |
+| matplotlib | グラフ・画像表示 |
+| japanize-matplotlib | matplotlib日本語対応 |
+| networkx | 共起ネットワーク可視化 |
+
+### R版
+
+| ライブラリ | 用途 |
+|-----------|------|
+| pdftools | PDFからテキスト抽出 |
+| RMeCab | 日本語形態素解析（MeCab使用） |
+| dplyr, tidyr | データ操作 |
+| ggplot2 | グラフ・画像表示 |
+| igraph | 共起ネットワーク可視化 |
+| wordcloud2 | ワードクラウド生成 |
+| stringr | 文字列処理 |
 
 ## ライセンス
 
@@ -195,15 +268,31 @@ WORDCLOUD_CONFIG = {
 
 ## 参考資料
 
+### Python版
 - [外務省 外交青書](https://www.mofa.go.jp/mofaj/gaiko/bluebook/)
 - [Janome ドキュメント](https://mocobeta.github.io/janome/)
 - [wordcloud ドキュメント](https://amueller.github.io/word_cloud/)
+
+### R版
+- [RMeCab ドキュメント](https://sites.google.com/site/rmaborakaba/)
+- [pdftools ドキュメント](https://docs.ropensci.org/pdftools/)
+- [igraph for R](https://r.igraph.org/)
+- [wordcloud2 ドキュメント](https://github.com/Lchiffon/wordcloud2)
 
 ---
 
 ## 更新履歴
 
 ### 2025-12-15
+
+#### v1.2.0
+- R版Jupyterノートブック（`text_mining_analysis_r.ipynb`）を追加
+  - pdftoolsによるPDFテキスト抽出
+  - RMeCabによる形態素解析
+  - igraphによる共起ネットワーク可視化
+  - wordcloud2によるワードクラウド生成
+- READMEにR環境セットアップ手順を追加
+- 使用ライブラリ一覧をPython版/R版に分離
 
 #### v1.1.0
 - Jupyterノートブック形式（`text_mining_analysis.ipynb`）を追加
