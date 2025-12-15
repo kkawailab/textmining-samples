@@ -14,8 +14,9 @@ except ImportError:
 
 try:
     import matplotlib.pyplot as plt
+    import japanize_matplotlib
 except ImportError:
-    print("matplotlibをインストールしてください: pip install matplotlib")
+    print("matplotlibをインストールしてください: pip install matplotlib japanize-matplotlib")
     exit(1)
 
 

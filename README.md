@@ -53,7 +53,7 @@ source venv/bin/activate  # Linux/macOS
 ### 3. 依存パッケージのインストール
 
 ```bash
-pip install pdfplumber janome wordcloud matplotlib networkx jupyter
+pip install pdfplumber janome wordcloud matplotlib japanize-matplotlib networkx jupyter
 ```
 
 ## 使い方
@@ -185,6 +185,7 @@ WORDCLOUD_CONFIG = {
 | Janome | - | 日本語形態素解析 |
 | wordcloud | - | ワードクラウド生成 |
 | matplotlib | - | グラフ・画像表示 |
+| japanize-matplotlib | - | matplotlib日本語対応 |
 | networkx | - | 共起ネットワーク可視化 |
 
 ## ライセンス

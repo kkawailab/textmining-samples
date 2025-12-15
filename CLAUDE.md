@@ -12,7 +12,7 @@ Japanese text mining analysis project for "Diplomatic Bluebook 2025" (外交青�
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install pdfplumber janome wordcloud matplotlib networkx jupyter
+pip install pdfplumber janome wordcloud matplotlib japanize-matplotlib networkx jupyter
 ```
 
 ### Run Analysis Scripts
